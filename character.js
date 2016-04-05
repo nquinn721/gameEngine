@@ -23,7 +23,10 @@ Character.prototype = {
 		this.setPosition(0, 40, 1);
 	},
 	jump : function() {
-		this.body.applyForce(0, -3000);
+		if(!this.jumped)
+			this.body.applyImpulse(0, -30);
+
+		this.jumped = true;
 	},
 	
 	tick : function() {

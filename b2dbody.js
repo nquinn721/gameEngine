@@ -7,7 +7,10 @@ Body.prototype = {
 		this.bodies[body || 0].SetLinearVelocity(new b2Vec2(x || 0, y || 0));
 	},
 	applyForce : function(x, y, body) {
-		this.bodies[body || 0].ApplyForce(new b2Vec2(x || 0, y || 0));	
+		this.bodies[body || 0].ApplyForce(new b2Vec2(x || 0, y || 0), this.bodies[body || 0].GetWorldCenter());	
+	},
+	applyImpulse : function(x, y, body) {
+		this.bodies[body || 0].ApplyImpulse(new b2Vec2(x || 0, y || 0), this.bodies[body || 0].GetWorldCenter());	
 	},
 	setPosition : function(x, y, body) {
 		var position = this.getPosition(body);

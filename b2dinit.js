@@ -1,14 +1,8 @@
 
 
-console.log(Box2D);
 var canvas = document.getElementById('game'),
 	ctx = canvas.getContext('2d');
-var SCALE = 30, world,
-	canvasHeight = $('#game').height(),
-	canvasWidth = $('#game').width(),
-	viewHeight = $('#viewport').height(),
-	viewWidth = $('#viewport').width(),
-	canvas = $('canvas');
+var SCALE = 30, world;
 
 var debug = document.getElementById('debug');
 

@@ -22,9 +22,9 @@
 	<canvas id="debug" width='800' height='500'></canvas>
 </div>
 <script src="b2dDeclarations.js"></script>
-<script src="box2dsetup.js"></script>
+<script src="b2dinit.js"></script>
 <script src="b2d.js"></script>
-<script src="body.js"></script>
+<script src="b2dbody.js"></script>
 <script src="character.js"></script>
 <script>
 
@@ -46,13 +46,16 @@ var player = new Character({
 		y : 440,
 		w : 50,
 		h : 40,
-		type : 'dynamic'
+		type : 'dynamic',
+		density : 50,
+		fixedRotation : true
 	},{
 		x : 100,
 		y : 400,
 		w : 50,
 		h : 40,
 		type : 'dynamic',
+		density : 50,
 		fixedRotation : true
 	}],
 	joint : 'distance',
