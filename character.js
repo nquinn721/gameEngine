@@ -9,8 +9,7 @@ Character.prototype = {
 		this.isMoving = dir;
 	},
 	stopMove : function(dir) {
-		for(var i = 0; i < this.body.bodies.length; i++)
-			this.body.setLinearVelocity(null, null, i);
+		this.body.setLinearVelocity(null, null);
 		this.isMoving = false;
 	},
 	moveleft : function(speed) {
@@ -20,13 +19,12 @@ Character.prototype = {
 		this.body.setLinearVelocity(10);
 	},
 	duck : function() {
-		this.setPosition(0, 40, 1);
+		this.setPosition(0, 40);
 	},
 	jump : function() {
 		if(!this.jumped)
-			this.body.applyImpulse(0, -30);
+			this.body.applyImpulse(0, -3000);
 
-		this.jumped = true;
 	},
 	
 	tick : function() {

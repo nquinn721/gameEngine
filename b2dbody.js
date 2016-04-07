@@ -1,39 +1,42 @@
 function Body(obj) {
-	this.bodies = b2d.rect(obj);
+	var elements = b2d.create(obj);
+	this.body = elements.body;
+	this.joints = elements.joints;
 }
 
 Body.prototype = {
-	setLinearVelocity : function(x, y, body) {
-		this.bodies[body || 0].SetLinearVelocity(new b2Vec2(x || 0, y || 0));
+	setLinearVelocity : function(x, y) {
+		this.body.SetLinearVelocity(new b2Vec2(x || 0, y || 0));
 	},
-	applyForce : function(x, y, body) {
-		this.bodies[body || 0].ApplyForce(new b2Vec2(x || 0, y || 0), this.bodies[body || 0].GetWorldCenter());	
+	applyForce : function(x, y) {
+		this.body.ApplyForce(new b2Vec2(x || 0, y || 0), this.body.GetWorldCenter());	
 	},
-	applyImpulse : function(x, y, body) {
-		this.bodies[body || 0].ApplyImpulse(new b2Vec2(x || 0, y || 0), this.bodies[body || 0].GetWorldCenter());	
+	applyImpulse : function(x, y) {
+		console.log('apply impulse');
+		this.body.ApplyImpulse(new b2Vec2(x || 0, y || 0), this.body.GetWorldCenter());	
 	},
-	setPosition : function(x, y, body) {
+	setPosition : function(x, y) {
 		var position = this.getPosition(body);
 		position.x = (position.x + x) / SCALE;
 		position.y = (position.y + y) / SCALE;
-		this.bodies[body || 0].SetPosition(position);
+		this.body.SetPosition(position);
 	},
-	getPosition : function(body) {
-		var position = this.bodies[body || 0].GetPosition();
+	getPosition : function() {
+		var position = this.body.GetPosition();
 		position.y *= SCALE;
 		position.x *= SCALE;
 		return position;
 	},
-	getX : function(body) {
-		return this.getRealX(body) / SCALE;
+	getX : function() {
+		return this.getRealX() / SCALE;
 	},
-	getY : function(body) {
-		return this.getRealY(body) / SCALE;
+	getY : function() {
+		return this.getRealY() / SCALE;
 	},
-	getRealX : function(body) {
-		return this.bodies[body || 0].GetPosition().y;
+	getRealX : function() {
+		return this.body.GetPosition().y;
 	},
-	getRealY : function(body) {
-		return this.bodies[body || 0].GetPosition().y;
+	getRealY : function() {
+		return this.body.GetPosition().y;
 	}
 }
