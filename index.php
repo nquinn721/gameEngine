@@ -63,23 +63,30 @@
 // body.CreateFixture(fixDef1);
 
 b2d.create({
-	x : 0,
-	y : 480,
-	w : 800,
-	h : 20
+	bodies : [{
+		x : 0,
+		y : 480,
+		w : 800,
+		h : 20,
+		type : 'body'
+		
+	},{
+		x : 0,
+		y : 0,
+		w : 20,
+		h : 480,
+		type : 'body'
+		
+	}]
 });
-b2d.create({
-	x : 0,
-	y : 0,
-	w : 20,
-	h : 480
-});
+// b2d.create({
+// });
 var player = new Character({
 	bodies : [{
 		id : 'body',
 		x : 10,
 		y : 400,
-		r : 10,
+		r : 25,
 		w : 50,
 		h : 40,
 		type : 'dynamic',
@@ -89,8 +96,8 @@ var player = new Character({
 	}
 	,{
 		id : 'head',
-		x : -10,
-		y : 0,
+		x : 10,
+		y : 350,
 		w : 50,
 		h : 40,
 		type : 'dynamic',
@@ -106,28 +113,28 @@ var player = new Character({
 	// }]
 });
 
-// $(document).on('keydown', function(e) {
-// 	var key = e.keyCode;
-// 	if(keyCodes[key] === 'w'){
-// 		player.jump();
-// 	}
-// 	if(keyCodes[key] === 'a'){
-// 		player.move('left');
-// 	}
-// 	if(keyCodes[key] === 's'){
-// 		player.duck();
-// 	}
-// 	if(keyCodes[key] === 'd'){
-// 		player.move('right');
-// 	}
-// }).on('keyup', function(e) {
-// 	player.stopMove();
-// });
+$(document).on('keydown', function(e) {
+	var key = e.keyCode;
+	if(keyCodes[key] === 'w'){
+		player.jump();
+	}
+	if(keyCodes[key] === 'a'){
+		player.move('left');
+	}
+	if(keyCodes[key] === 's'){
+		player.duck();
+	}
+	if(keyCodes[key] === 'd'){
+		player.move('right');
+	}
+}).on('keyup', function(e) {
+	player.stopMove();
+});
 
 
-// setInterval(function() {
-// 	player.tick();
-// })
+setInterval(function() {
+	player.tick();
+})
 </script>
 </body>
 </html>
