@@ -79,18 +79,16 @@ var player = new Character({
 		id : 'body',
 		x : 10,
 		y : 400,
-		r : 10,
 		w : 50,
 		h : 40,
 		type : 'dynamic',
 		density : 50,
-		fixedRotation : true,
-		shape : 'circle'
+		fixedRotation : true
 	}
 	,{
 		id : 'head',
-		x : -10,
-		y : 0,
+		x : 10,
+		y : 360,
 		w : 50,
 		h : 40,
 		type : 'dynamic',
@@ -106,28 +104,28 @@ var player = new Character({
 	// }]
 });
 
-// $(document).on('keydown', function(e) {
-// 	var key = e.keyCode;
-// 	if(keyCodes[key] === 'w'){
-// 		player.jump();
-// 	}
-// 	if(keyCodes[key] === 'a'){
-// 		player.move('left');
-// 	}
-// 	if(keyCodes[key] === 's'){
-// 		player.duck();
-// 	}
-// 	if(keyCodes[key] === 'd'){
-// 		player.move('right');
-// 	}
-// }).on('keyup', function(e) {
-// 	player.stopMove();
-// });
+$(document).on('keydown', function(e) {
+	var key = e.keyCode;
+	if(keyCodes[key] === 'w'){
+		player.jump();
+	}
+	if(keyCodes[key] === 'a'){
+		player.move('left');
+	}
+	if(keyCodes[key] === 's'){
+		player.duck();
+	}
+	if(keyCodes[key] === 'd'){
+		player.move('right');
+	}
+}).on('keyup', function(e) {
+	player.stopMove();
+});
 
 
-// setInterval(function() {
-// 	player.tick();
-// })
+setInterval(function() {
+	player.tick();
+})
 </script>
 </body>
 </html>
