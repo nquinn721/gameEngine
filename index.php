@@ -68,21 +68,25 @@ b2d.create({
 		y : 480,
 		w : 800,
 		h : 20,
-		type : 'body'
 		
 	},{
 		x : 0,
 		y : 0,
 		w : 20,
 		h : 480,
-		type : 'body'
+		
+	},{
+		x : 780,
+		y : 0,
+		w : 20,
+		h : 480,
 		
 	}]
 });
 // b2d.create({
 // });
 var player = new Character({
-	bodies : [{
+	body : [{
 		id : 'body',
 		x : 10,
 		y : 400,
@@ -90,21 +94,19 @@ var player = new Character({
 		w : 50,
 		h : 40,
 		type : 'dynamic',
-		density : 50,
+		density : 150,
 		fixedRotation : true,
 		shape : 'circle'
-	}
-	,{
+	} ,{
 		id : 'head',
 		x : 10,
 		y : 350,
 		w : 50,
 		h : 40,
 		type : 'dynamic',
-		density : 50,
+		density : 150,
 		fixedRotation : true
-	}
-	],
+	} ],
 	// joints : [{
 	// 	connects : 'body head',
 	// 	joint : 'distance',
