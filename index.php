@@ -63,39 +63,46 @@
 // body.CreateFixture(fixDef1);
 
 b2d.create({
-	x : 0,
-	y : 480,
-	w : 800,
-	h : 20
-});
-b2d.create({
-	x : 0,
-	y : 0,
-	w : 20,
-	h : 480
-});
-var player = new Character({
 	bodies : [{
+		x : 0,
+		y : 480,
+		w : 800,
+		h : 20,
+		
+	},{
+		x : 0,
+		y : 0,
+		w : 20,
+		h : 480,
+		
+	},{
+		x : 780,
+		y : 0,
+		w : 20,
+		h : 480,
+		
+	}]
+});
+// b2d.create({
+// });
+var player = new Character({
+	config : {
+		body : {
+			fixedRotation : true,
+			type : 'dynamic',
+			density : 150,
+			w : 50,
+			x : 10,
+			h : 50,
+		}
+	},
+	body : [{
 		id : 'body',
-		x : 10,
 		y : 400,
-		w : 50,
-		h : 40,
-		type : 'dynamic',
-		density : 50,
-		fixedRotation : true
-	}
-	,{
+	} ,{
 		id : 'head',
-		x : 10,
-		y : 360,
-		w : 50,
-		h : 40,
-		type : 'dynamic',
-		density : 50,
-		fixedRotation : true
-	}
-	],
+		y : 350,
+	} ],
 	// joints : [{
 	// 	connects : 'body head',
 	// 	joint : 'distance',

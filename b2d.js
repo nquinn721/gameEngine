@@ -6,35 +6,77 @@ function B2D() {
 B2D.prototype = {
 
 	create : function(obj) {
-		var bodyDef = obj.bodies ? this.body(obj.bodies[0]) : this.body(obj),
-			fixtures = [],
-			joints = [];
+		this.mergeWithConfig(obj);
+
+		if(obj.body)
+			return this.createBodyMultipleFixtures(obj);
 
 		if(obj.bodies)
-			for(var i = 0; i < obj.bodies.length; i++){
-				fixtures.push(this.fixture(obj.bodies[i], bodyDef));
-			}
-		else
-			fixtures.push(this.fixture(obj, bodyDef));
+			return this.createBodies(obj);
+
+
+		
 
 
 
-		if(obj.joints){
-			for(var i = 0; i < obj.joints.length; i++){
-				var jointConfig = obj.joints[i],
-					jointIds = jointConfig.connects.split(' '),
-					body1 = this.getBody(bodies, jointIds[0]),
-					body2 = this.getBody(bodies, jointIds[1]),
-					joint = this.joint(jointConfig, body1, body2);
-				joints.push(joint);
-			}
+		// if(obj.joints){
+		// 	for(var i = 0; i < obj.joints.length; i++){
+		// 		var jointConfig = obj.joints[i],
+		// 			jointIds = jointConfig.connects.split(' '),
+		// 			body1 = this.getBody(bodies, jointIds[0]),
+		// 			body2 = this.getBody(bodies, jointIds[1]),
+		// 			joint = this.joint(jointConfig, body1, body2);
+		// 		joints.push(joint);
+		// 	}
+		// }
+
+		
+	},
+	createBodies : function(obj) {
+		var bodies = [];
+
+		for(var i = 0; i < obj.bodies.length; i++){
+
+			var bodyDef = this.body(obj.bodies[i]),
+				fixtureDef = this.fixture(obj.bodies[i]),
+				body = world.CreateBody(bodyDef);
+
+			bodies.push(this.createBody(body, fixtureDef));
 		}
 
-		var body = world.CreateBody(bodyDef);
-		for(var i = 0; i < fixtures.length; i++)
-			this.createBody(body, fixtures[i]);
+		return {bodies : bodies};
+		
+	},
+	createBodyMultipleFixtures : function(obj) {
+		var bodyDef = this.body(obj.body[0]);
 
-		return {body : body, joints : joints};
+		this.fixtures = [];
+
+		for(var i = 0; i < obj.body.length; i++){
+			var body = obj.body[i];
+
+			this.fixtures.push(
+				this.fixture(
+					body, 
+					i > 0 && body.type === 'dynamic' ? true : false
+				)
+			);
+		}
+		
+		var body = world.CreateBody(bodyDef);
+		for(var i = 0; i < this.fixtures.length; i++)
+			this.createBody(body, this.fixtures[i]);
+
+		return {body : body};	
+	},
+	mergeWithConfig : function(obj) {
+		if(obj.config && (obj.config.body || obj.config.bodies)){
+			var bodies = obj.body || obj.bodies,
+				config = obj.config.body || obj.config.bodies;
+
+			for(var i = 0; i < bodies.length; i++)
+				for(var j in config)bodies[i][j] = config[j];
+		}
 	},
 	body : function(obj) {
 		var bodyDef = new b2BodyDef();
@@ -42,23 +84,35 @@ B2D.prototype = {
 		bodyDef.userData = obj;
 		bodyDef.position.x = (obj.x + (obj.w / 2) || 50) / SCALE;
 		bodyDef.position.y = ((obj.y + (obj.h / 2)) || 50) / SCALE;
-
+		
 		if(obj.fixedRotation)
 			bodyDef.fixedRotation = true;
 
 		return bodyDef;
 	},
-	fixture : function(obj, bodyDef) {
+	fixture : function(obj, oriented) {
 		var fixDef = new b2FixtureDef();
 		fixDef.density = obj.density || 1;
 		fixDef.friction = obj.friction || 0.5;
+		fixDef.x = obj.x;
+		fixDef.y = obj.y;
 		
-
 		if(obj.shape === 'circle'){
     		fixDef.shape = new b2CircleShape(obj.r / SCALE || 5 / SCALE);
 		}else{
 			fixDef.shape = new b2PolygonShape();
-			fixDef.shape.SetAsBox((obj.w / 2 || 20) / SCALE, (obj.h / 2 || 20) / SCALE, new b2Vec2((obj.x + (obj.w / 2) || 50) / SCALE, ((obj.y + (obj.h / 2)) || 50) / SCALE), 0);
+			if(!oriented)
+				fixDef.shape.SetAsBox((obj.w / 2 || 20) / SCALE, (obj.h / 2 || 20) / SCALE);
+			else{
+				fixDef.shape.SetAsOrientedBox(
+					(obj.w / 2 || 20) / SCALE, 
+					(obj.h / 2 || 20) / SCALE, 
+					new b2Vec2(
+						(this.fixtures[0].x - obj.x)  / SCALE, 
+						(this.fixtures[0].y - obj.y) / SCALE
+					), 
+					0);
+			}
 		}
 		return fixDef;
 	},
