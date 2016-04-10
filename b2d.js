@@ -39,7 +39,7 @@ B2D.prototype = {
 
 			var bodyDef = this.body(obj.bodies[i]),
 				fixtureDef = this.fixture(obj.bodies[i]),
-				body = world.CreateBody(bodyDef);
+				body = world.createBody(bodyDef);
 
 			bodies.push(this.createBody(body, fixtureDef));
 		}
@@ -48,7 +48,7 @@ B2D.prototype = {
 		
 	},
 	createBodyMultipleFixtures : function(obj) {
-		var bodyDef = this.body(obj.body[0]);
+		var bodyDef = this.body(obj.body[0], obj);
 
 		this.fixtures = [];
 
@@ -63,7 +63,7 @@ B2D.prototype = {
 			);
 		}
 		
-		var body = world.CreateBody(bodyDef);
+		var body = world.createBody(bodyDef);
 		for(var i = 0; i < this.fixtures.length; i++)
 			this.createBody(body, this.fixtures[i]);
 
@@ -75,13 +75,15 @@ B2D.prototype = {
 				config = obj.config.body || obj.config.bodies;
 
 			for(var i = 0; i < bodies.length; i++)
-				for(var j in config)bodies[i][j] = config[j];
+				for(var j in config)
+					if(!bodies[i][j])
+						bodies[i][j] = config[j];
 		}
 	},
-	body : function(obj) {
+	body : function(obj, entireObj) {
 		var bodyDef = new b2BodyDef();
 		bodyDef.type = b2Body[obj.type ? 'b2_' + obj.type + 'Body' : 'b2_staticBody'];
-		bodyDef.userData = obj;
+		bodyDef.userData = entireObj || obj;
 		bodyDef.position.x = (obj.x + (obj.w / 2) || 50) / SCALE;
 		bodyDef.position.y = ((obj.y + (obj.h / 2)) || 50) / SCALE;
 		
@@ -108,8 +110,8 @@ B2D.prototype = {
 					(obj.w / 2 || 20) / SCALE, 
 					(obj.h / 2 || 20) / SCALE, 
 					new b2Vec2(
-						(this.fixtures[0].x - obj.x)  / SCALE, 
-						(this.fixtures[0].y - obj.y) / SCALE
+						obj.x / SCALE, 
+						obj.y / SCALE
 					), 
 					0);
 			}

@@ -21,8 +21,9 @@
 	<canvas id="game" width='800' height='500'></canvas>
 	<canvas id="debug" width='800' height='500'></canvas>
 </div>
-<script src="b2dDeclarations.js"></script>
+<script src="b2ddeclarations.js"></script>
 <script src="b2dinit.js"></script>
+<script src="b2dworld.js"></script>
 <script src="b2d.js"></script>
 <script src="b2dbody.js"></script>
 <script src="character.js"></script>
@@ -64,23 +65,32 @@
 
 b2d.create({
 	bodies : [{
+		id : 'floor',
 		x : 0,
 		y : 480,
 		w : 800,
 		h : 20,
 		
 	},{
+		id : 'left wall',
 		x : 0,
 		y : 0,
 		w : 20,
 		h : 480,
 		
 	},{
+		id : 'right wall',
 		x : 780,
 		y : 0,
 		w : 20,
 		h : 480,
 		
+	},{
+		id : 'platform',
+		x : 100,
+		y : 50,
+		w : 100,
+		h : 20
 	}]
 });
 // b2d.create({
@@ -98,11 +108,15 @@ var player = new Character({
 	},
 	body : [{
 		id : 'body',
-		y : 400,
+		y : 300,
 	} ,{
 		id : 'head',
-		y : 350,
-	} ],
+		y : 50,
+	} ,{
+		id : 'feet',
+		y : 100,
+		h : 5
+	}],
 	// joints : [{
 	// 	connects : 'body head',
 	// 	joint : 'distance',

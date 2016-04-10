@@ -1,10 +1,16 @@
 function Body(obj) {
 	var elements = b2d.create(obj);
+	this.element = $.extend({}, obj);
 	this.body = elements.body;
 	this.joints = elements.joints;
+	console.log(this.body);
+	for(var i in this)obj[i] = this[i];
 }
 
 Body.prototype = {
+	contact : function(bodyA, userDataA, bodyB, userDataB) {
+		console.log(bodyA, userDataA, bodyB, userDataB);
+	},
 	setLinearVelocity : function(x, y) {
 		this.body.SetLinearVelocity(new b2Vec2(x || 0, y || 0));
 	},
