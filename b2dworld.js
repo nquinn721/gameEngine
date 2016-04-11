@@ -40,15 +40,15 @@ World.prototype = {
 		this.listener = new Box2D.Dynamics.b2ContactListener();
 	    // this.listener.PostSolve = function (contact, impulse) {
 	    this.listener.BeginContact = function (contact, impulse) {
-	        var bodyA = contact.GetFixtureA().GetBody(),
-	        	userDataA = bodyA.GetUserData(),
-	            bodyB = contact.GetFixtureB().GetBody()
-	            userDataB = bodyB.GetUserData();
-
-	        if(userDataA.contact)
-            	userDataA.contact(bodyA, userDataA, bodyB, userDataB);
-           	if(userDataB.contact)
-            	userDataB.contact(bodyA, userDataA, bodyB, userDataB);
+	        var bodyA = contact.GetFixtureA().GetBody().GetUserData(),
+	            bodyB = contact.GetFixtureB().GetBody().GetUserData();
+	          console.log(bodyA, bodyB);
+	        if (bodyA.contact) {
+	            bodyA.contact(bodyB, contact, impulse)
+	        }
+	        if (bodyB.contact) {
+	            bodyB.contact(bodyA, contact, impulse)
+	        }
 
 	    };
 	    this.world.SetContactListener(this.listener);	

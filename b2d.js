@@ -83,7 +83,7 @@ B2D.prototype = {
 	body : function(obj, entireObj) {
 		var bodyDef = new b2BodyDef();
 		bodyDef.type = b2Body[obj.type ? 'b2_' + obj.type + 'Body' : 'b2_staticBody'];
-		bodyDef.userData = entireObj || obj;
+		bodyDef.userData = obj;
 		bodyDef.position.x = (obj.x + (obj.w / 2) || 50) / SCALE;
 		bodyDef.position.y = ((obj.y + (obj.h / 2)) || 50) / SCALE;
 		

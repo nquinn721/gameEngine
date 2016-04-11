@@ -25,6 +25,7 @@
 <script src="b2dinit.js"></script>
 <script src="b2dworld.js"></script>
 <script src="b2d.js"></script>
+<script src="b2dmodel.js"></script>
 <script src="b2dbody.js"></script>
 <script src="character.js"></script>
 <script>

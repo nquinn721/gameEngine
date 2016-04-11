@@ -1,10 +1,12 @@
 function Body(obj) {
-	var elements = b2d.create(obj);
-	this.element = $.extend({}, obj);
+	var elements = [];
+	for(var i = 0; i < obj.body.length; i++)
+		elements.push(new Model(obj.body[i]));
+
+	obj.body = elements;
+	elements = b2d.create(obj);
 	this.body = elements.body;
 	this.joints = elements.joints;
-	console.log(this.body);
-	for(var i in this)obj[i] = this[i];
 }
 
 Body.prototype = {
