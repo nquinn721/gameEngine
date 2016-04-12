@@ -83,7 +83,7 @@ B2D.prototype = {
 	body : function(obj, entireObj) {
 		var bodyDef = new b2BodyDef();
 		bodyDef.type = b2Body[obj.type ? 'b2_' + obj.type + 'Body' : 'b2_staticBody'];
-		bodyDef.userData = obj;
+		bodyDef.userData = entireObj || obj;
 		bodyDef.position.x = (obj.x + (obj.w / 2) || 50) / SCALE;
 		bodyDef.position.y = ((obj.y + (obj.h / 2)) || 50) / SCALE;
 		
@@ -98,6 +98,7 @@ B2D.prototype = {
 		fixDef.friction = obj.friction || 0.5;
 		fixDef.x = obj.x;
 		fixDef.y = obj.y;
+		fixDef.userData = obj;
 		
 		if(obj.shape === 'circle'){
     		fixDef.shape = new b2CircleShape(obj.r / SCALE || 5 / SCALE);

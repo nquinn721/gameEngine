@@ -5,7 +5,7 @@ function Model(obj, parent) {
 }
 
 Model.prototype = {
-	contact : function() {
-		console.log('contact');
+	contact : function(body) {
+		// console.log('contact', body, this);
 	}
 }

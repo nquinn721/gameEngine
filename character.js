@@ -1,9 +1,12 @@
 
 function Character(obj) {
-	this.body = new Body(obj);
+	this.body = new Body(obj, this);
 }
 
 Character.prototype = {
+	contact : function() {
+		console.log('contact character');	
+	},
 	move : function(dir) {
 		console.log('move');
 		this.isMoving = dir;
@@ -19,11 +22,11 @@ Character.prototype = {
 		this.body.setLinearVelocity(10);
 	},
 	duck : function() {
-		this.setPosition(0, 40);
+		this.body.setPosition(0, 40);
 	},
 	jump : function() {
 		if(!this.jumped)
-			this.body.applyImpulse(0, -3000);
+			this.applyImpulse(0, -3000);
 
 	},
 	

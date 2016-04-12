@@ -41,14 +41,18 @@ World.prototype = {
 	    // this.listener.PostSolve = function (contact, impulse) {
 	    this.listener.BeginContact = function (contact, impulse) {
 	        var bodyA = contact.GetFixtureA().GetBody().GetUserData(),
-	            bodyB = contact.GetFixtureB().GetBody().GetUserData();
-	          console.log(bodyA, bodyB);
-	        if (bodyA.contact) {
-	            bodyA.contact(bodyB, contact, impulse)
-	        }
-	        if (bodyB.contact) {
-	            bodyB.contact(bodyA, contact, impulse)
-	        }
+	        	fixtureA = contact.GetFixtureA().GetUserData(),
+	            bodyB = contact.GetFixtureB().GetBody().GetUserData(),
+	        	fixtureB = contact.GetFixtureA().GetUserData();
+
+	        if (bodyA.contact) 
+	            bodyA.contact(bodyB, fixtureA, contact, impulse)
+	        if (bodyB.contact) 
+	            bodyB.contact(bodyA, fixtureB, contact, impulse)
+	        if(fixtureA.contact)
+	        	fixtureA.contact(fixtureB, bodyA);
+	        if(fixtureB.contact)
+	        	fixtureB.contact(fixtureA, bodyB);
 
 	    };
 	    this.world.SetContactListener(this.listener);	

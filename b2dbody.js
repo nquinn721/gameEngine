@@ -1,17 +1,23 @@
-function Body(obj) {
+function Body(obj, owner) {
+	console.log(owner);
 	var elements = [];
 	for(var i = 0; i < obj.body.length; i++)
 		elements.push(new Model(obj.body[i]));
 
 	obj.body = elements;
+	obj.contact = this.contact;
+
 	elements = b2d.create(obj);
 	this.body = elements.body;
 	this.joints = elements.joints;
+
+	this.owner = owner;
 }
 
 Body.prototype = {
-	contact : function(bodyA, userDataA, bodyB, userDataB) {
-		console.log(bodyA, userDataA, bodyB, userDataB);
+	contact : function(contact, fixture) {
+		console.log(this);
+		if(this.owner)this.owner.contact(contact, fixture, contact, impulse);
 	},
 	setLinearVelocity : function(x, y) {
 		this.body.SetLinearVelocity(new b2Vec2(x || 0, y || 0));
