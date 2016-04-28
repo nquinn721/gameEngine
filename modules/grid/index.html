@@ -18,15 +18,15 @@ var io = io.connect(),
 	canvas = document.getElementById('space-fighter'),
 	ctx = canvas.getContext('2d');
 
-var players = [];
+var items = [];
 
-io.on('players', function(pl) {
-	console.log(pl.length);
-	players = pl;
+io.on('items', function(itemList) {
+	console.log(itemList);
+	items = itemList;
 });
-io.on('moved', function(player) {
-	for(var i = 0; i < players.length; i++)
-		if(players[i].id === player.id)players[i] = player;
+io.on('moved', function(item) {
+	for(var i = 0; i < items.length; i++)
+		if(items[i].id === item.id)items[i] = item;
 });
 
 $(document).on('keydown', function (e) {
@@ -40,14 +40,16 @@ $(document).on('keydown', function (e) {
 		io.emit('move', 'left');
 	if(k === 39)
 		io.emit('move', 'right');
+	if(k === 32)
+		io.emit('shoot');
 }).on('keyup', function() {
 	io.emit('stopmove');
 });
 
 function draw() {
 	ctx.clearRect(0,0,canvas.width,canvas.height);
-	for(var i = 0; i < players.length; i++)
-		ctx.fillRect(players[i].coords.x, players[i].coords.y, 10, 10);
+	for(var i = 0; i < items.length; i++)
+		ctx.fillRect(items[i].coords.x, items[i].coords.y, items[i].coords.w, items[i].coords.h);
 
 
 	ctx.beginPath();

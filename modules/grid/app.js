@@ -36,13 +36,15 @@ io.on('connection', function(socket) {
 	socket.on('move', function(dir) {
 		socket.player.move(dir);
 	});
-
-	socket.on('stopmove', function(dir) {
+	socket.on('stopmove', function() {
 		socket.player.stopmove();
+	});
+	socket.on('shoot', function() {
+		socket.player.shoot();
 	});
 
 	socket.on('disconnect', function() {
-		grid.removePlayer(socket.player);
+		grid.removeItem(socket.player);
 	});
 })
 
